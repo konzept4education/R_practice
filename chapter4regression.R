@@ -169,10 +169,20 @@ predict(fit, newdata = unique.message)
 #でも標本平均はtapply関数を使っても求めることが出来る。
 tapply(social$primary2006, social$messages, mean)
 
+#不均一トリートメント効果 ATE
+social.voters = social %>% filter(primary2004 ==1)
+head(social.voters)
 
+ate.voter = mean(social.voters$primary2006[social.voters$messages == "Neighbors"]) -
+            mean(social.voters$primary2006[social.voters$messages == "Control"])
+ate.voter
 
+#投票しなかった人の平均トリートメント　
+social.nonvoters = social %>% filter(primary2004 ==0)
+head(social.nonvoters)
 
-
+ate.nonvoters = mean(social.nonvoters$primary2006[social.nonvoters$messages == "Neighbors"]) -
+                mean(social.nonvoters$primary2006[social.nonvoters$messages == "Control"])
 
 
 
